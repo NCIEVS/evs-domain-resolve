@@ -29,7 +29,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										nci.nih.gov.ipconverter.IpConverter
+										nci.nih.gov.evs.ipconverter.IpConverter
 									</mainClass>
 								</manifest>
 							</archive>
