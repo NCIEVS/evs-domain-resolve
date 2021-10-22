@@ -84,7 +84,7 @@ public class ProcessLog {
     public String getTimeStampFromLine( String line) {
     	String ip = null;
     	//Finding the pattern of the time stamp by searching for the square brackets and populating the interior
-        final String regex =  "(\\[\\d{2}\\/[a-z,A-Z]+\\/\\d{4}:\\d{2}:\\d{2}:\\d{2} \\+\\d{4}\\])";
+        final String regex =  "(\\[\\d{2}\\/[a-z,A-Z]+\\/\\d{4}:\\d{2}:\\d{2}:\\d{2} [\\+,-]\\d{4}\\])";
    
         final Pattern pattern = Pattern.compile(regex);
 		final Matcher matcher = pattern.matcher(line);

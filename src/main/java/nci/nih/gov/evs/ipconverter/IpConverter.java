@@ -20,7 +20,7 @@ public class IpConverter {
 	}
 	
 	public void run(String ... args){
-		String accessPath = "/Users/bauerhs/git/IPtoTLDomain/src/nci/nih/gov/ipconverter/access.sample.log";
+		String accessPath = "/Users/bauerhs/git/IPtoTLDomain/src/nci/nih/gov/ipconverter/access.target.log";
 		String filePath = "myFile.txt";
 		ProcessLog processor = new ProcessLog();
 		CustomLog log = new CustomLog();
@@ -36,11 +36,21 @@ public class IpConverter {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
 			});
+			
+			if(writer != null)
+			{
+				try {
+				writer.close();
+				} catch (IOException e) {
+				e.printStackTrace();
+			}}
 		} 
 		catch (IOException ex) {
 		   ex.printStackTrace();
-		} 
+		}
+		
 	}
 
 }
