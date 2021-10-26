@@ -20,7 +20,7 @@ public class IpConverter {
 	}
 	
 	public void run(String ... args){
-		String accessPath = "/Users/bauerhs/git/IPtoTLDomain/src/nci/nih/gov/ipconverter/access.target.log";
+		String accessPath = "/Users/bauerhs/git/evs-domain-resolve/src/main/java/nci/nih/gov/evs/ipconverter/access.log";
 		String filePath = "myFile.txt";
 		ProcessLog processor = new ProcessLog();
 		CustomLog log = new CustomLog();
