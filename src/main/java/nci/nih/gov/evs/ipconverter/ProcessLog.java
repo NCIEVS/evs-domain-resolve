@@ -105,6 +105,8 @@ public class ProcessLog {
 			ip = matcher.group(1);
 		}
 		if(ip == null || ip.equals("")) {return 0;}
+		if(Integer.valueOf(ip) < 0) 
+		 { return 0;}
 		else{return Integer.valueOf(ip);}
     }
 
@@ -112,7 +114,9 @@ public class ProcessLog {
     public String getIpFromLine(String line) {
     	if(line == null 
     			|| line.equals("") 
-    			|| isBot(line)) { return "NOIP";}
+    			|| isBot(line) 
+    			|| isHealthPing(line))
+    				{ return "NOIP";}
     	String ip = null;
         final String regex = 
         		"^([\\d\\/.]+)";
@@ -125,7 +129,12 @@ public class ProcessLog {
     	return ip;
     }
     
-    public String getTLDString(String IP) {
+    private boolean isHealthPing(String domain) {
+    	if(domain.contains("ELB-HealthChecker")) { return true;}
+    	return false;
+	}
+
+	public String getTLDString(String IP) {
     		if(IP == null) {return null;}
     		BufferedReader br = null;
             java.lang.ProcessBuilder processBuilder = new java.lang.ProcessBuilder("dig","-x", IP, "+short");
@@ -150,7 +159,7 @@ public class ProcessLog {
     	}
     
     public boolean isBot(String domain) {
-    	if(domain.contains("bot") || domain.contains("crawl")) {System.out.println("Is bot"); return true;}
+    	if(domain.contains("Googlebot")) {System.out.println("Removing bot reference"); return true;}
     	return false;
     }
 

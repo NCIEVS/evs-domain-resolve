@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 public class CustomLog {
 	
    	class IpConsolidated{
-   		public IpConsolidated(String ip, String tmstp, int size) {
+   		public IpConsolidated(String ip, String tmstp, long size) {
    			this.ip = ip;
    			this.tmstp = tmstp;
    			this.size = size;
@@ -17,7 +17,7 @@ public class CustomLog {
 
 		String ip;
    		String tmstp;
-   		Integer size;
+   		long size;
    	}
    	
 	
