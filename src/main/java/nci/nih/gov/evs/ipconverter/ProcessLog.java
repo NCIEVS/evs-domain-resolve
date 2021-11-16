@@ -13,7 +13,16 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -92,6 +101,15 @@ public class ProcessLog {
 			ip = matcher.group(1);
 		}
     	return ip;
+    }
+    
+    public String getDurationMilliSeconds(String rawDate) {
+ 	   DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
+ 	   builder.appendPattern("dd/MMM/yyyy:HH:mm:ss Z");
+ 	   DateTimeFormatter f = builder.toFormatter();
+ 	   TemporalAccessor dateTime = f.parse("23/Dec/2020:17:27:54 +0100");
+ 	   Instant.from(dateTime).toEpochMilli();
+ 	   return null;
     }
     
     
@@ -223,6 +241,69 @@ public class ProcessLog {
 			}}
 		}
 
+	}
+	
+	public static void main(String ...args) {
+	 	   DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
+	 	   builder.appendPattern("dd/MMM/yyyy:HH:mm:ss Z");
+	 	   DateTimeFormatter f = builder.toFormatter();
+	 	   TemporalAccessor dateTime = f.parse("23/Dec/2020:17:27:54 +0100");
+	 	   System.out.println(Instant.from(dateTime).toEpochMilli());
+
+	 	   SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+	 	    try {
+				Date firstDate = sdf.parse("23/Dec/2020");
+		 	    Date secondDate = sdf.parse("24/Dec/2020");
+		 	    
+		 	    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+		 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		 	    System.out.println("" + diff);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+	}
+
+	public long updateDurationByDayDate(Date day, Date newDay) {
+		if(!isNewDayDate(day, newDay)) {
+		return 0;
+		}else{return dateDiff(day, newDay);}
+	}
+	
+	private long dateDiff(Date day, Date newDay) {
+ 	    long diffInMillies = Math.abs(day.getTime() - day.getTime());
+ 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+ 	    return diff;
+	}
+
+	public Date getDayDateFromLogLine(String logLine) {
+		
+    	String date = null;
+    	//Finding the pattern of the time stamp by searching for the square brackets and populating the interior
+        final String regex =  "(\\\\d{2}\\\\/[a-z,A-Z]+\\\\/\\\\d{4})";
+   
+        final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(logLine);
+		if(matcher.find()) {
+			date = matcher.group(1);
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+		Date dayDate = null;
+    	try {
+			dayDate = sdf.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dayDate;		
+	}
+	
+	public boolean isNewDayDate(Date oldDate, Date newDate) {
+		 	    long diffInMillies = Math.abs(oldDate.getTime() - newDate.getTime());
+		 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		 	    return diff >= 1;
 	}
     
 }
