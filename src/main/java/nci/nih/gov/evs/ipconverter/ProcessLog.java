@@ -258,6 +258,14 @@ public class ProcessLog {
 		 	    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 		 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		 	    System.out.println("" + diff);
+		 	    
+		 	    
+				Date firstSameDate = sdf.parse("24/Dec/2020");
+		 	    Date secondSameDate = sdf.parse("24/Dec/2020");
+		 	    
+		 	    long diffInSameMillies = Math.abs(secondSameDate.getTime() - firstSameDate.getTime());
+		 	    long sameDiff = TimeUnit.DAYS.convert(diffInSameMillies, TimeUnit.MILLISECONDS);
+		 	    System.out.println("" + sameDiff);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -281,7 +289,7 @@ public class ProcessLog {
 		
     	String date = null;
     	//Finding the pattern of the time stamp by searching for the square brackets and populating the interior
-        final String regex =  "(\\\\d{2}\\\\/[a-z,A-Z]+\\\\/\\\\d{4})";
+        final String regex =  "(\\d{2}\\/[a-z,A-Z]+\\/\\d{4})";
    
         final Pattern pattern = Pattern.compile(regex);
 		final Matcher matcher = pattern.matcher(logLine);

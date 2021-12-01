@@ -47,7 +47,9 @@ public class CustomLog {
 		{ domain = processor.readLogLineWhois(processor.whois(conso.ip));}
 		logLine.append("timestamp: " + conso.tmstp + " ");
 		logLine.append("domain: " + domain + " ");
-		logLine.append("length: " + conso.size);
+		logLine.append("length: " + conso.size  + " ");
+		logLine.append("duration: " + conso.duration  + " ");
+		logLine.append("day: " + conso.day);
 		return logLine.toString();	
 	}
 	
