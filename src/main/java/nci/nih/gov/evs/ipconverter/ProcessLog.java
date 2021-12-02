@@ -93,7 +93,7 @@ public class ProcessLog {
     public String getTimeStampFromLine( String line) {
     	String ip = null;
     	//Finding the pattern of the time stamp by searching for the square brackets and populating the interior
-        final String regex =  "(\\[\\d{2}\\/[a-z,A-Z]+\\/\\d{4}:\\d{2}:\\d{2}:\\d{2} [\\+,-]\\d{4}\\])";
+        final String regex =  "(\\d{2}\\/[a-z,A-Z]+\\/\\d{4}:\\d{2}:\\d{2}:\\d{2} [\\+,-]\\d{4})";
    
         final Pattern pattern = Pattern.compile(regex);
 		final Matcher matcher = pattern.matcher(line);
@@ -103,13 +103,12 @@ public class ProcessLog {
     	return ip;
     }
     
-    public String getDurationMilliSeconds(String rawDate) {
+    public long getDurationMilliSeconds(String rawDate) {
  	   DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
  	   builder.appendPattern("dd/MMM/yyyy:HH:mm:ss Z");
  	   DateTimeFormatter f = builder.toFormatter();
- 	   TemporalAccessor dateTime = f.parse("23/Dec/2020:17:27:54 +0100");
- 	   Instant.from(dateTime).toEpochMilli();
- 	   return null;
+ 	   TemporalAccessor dateTime = f.parse(rawDate);
+ 	   return Instant.from(dateTime).toEpochMilli();
     }
     
     
@@ -273,10 +272,10 @@ public class ProcessLog {
 
 	}
 
-	public long updateDurationByDayDate(Date day, Date newDay) {
+	public long updateDurationByDayDate(Date day, Date newDay, String tmstp, String tmstp2) {
 		if(!isNewDayDate(day, newDay)) {
-		return 0;
-		}else{return dateDiff(day, newDay);}
+		return Math.abs(getDurationMilliSeconds(tmstp) - getDurationMilliSeconds(tmstp2));
+		}else{return 0;}
 	}
 	
 	private long dateDiff(Date day, Date newDay) {

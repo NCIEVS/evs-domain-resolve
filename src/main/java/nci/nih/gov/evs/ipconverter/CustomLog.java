@@ -76,7 +76,7 @@ public class CustomLog {
 	  if(consolidatedIPs.containsKey(consolidated.ip)) 
 	  	{IpConsolidated ip = consolidatedIPs.get(consolidated.ip);
 	  	 ip.size += consolidated.size;
-	  	 ip.duration = processor.updateDurationByDayDate(ip.day, consolidated.day);
+	  	 ip.duration = processor.updateDurationByDayDate(ip.day, consolidated.day, ip.tmstp, consolidated.tmstp);
 	  	}
 	  else 
 	   { consolidatedIPs.put(consolidated.ip, consolidated);}
