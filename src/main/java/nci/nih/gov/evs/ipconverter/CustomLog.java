@@ -73,13 +73,13 @@ public class CustomLog {
 	   consolidated.tmstp = processor.getTimeStampFromLine(logLine);
 	   consolidated.size = Integer.valueOf(processor.getLengthFromLine(logLine));
 	   consolidated.day = processor.getDayDateFromLogLine(logLine);
-	  if(consolidatedIPs.containsKey(consolidated.ip)) 
-	  	{IpConsolidated ip = consolidatedIPs.get(consolidated.ip);
+	  if(consolidatedIPs.containsKey(consolidated.ip + consolidated.day)) 
+	  	{IpConsolidated ip = consolidatedIPs.get(consolidated.ip + consolidated.day);
 	  	 ip.size += consolidated.size;
 	  	 ip.duration = processor.updateDurationByDayDate(ip.day, consolidated.day, ip.tmstp, consolidated.tmstp);
 	  	}
 	  else 
-	   { consolidatedIPs.put(consolidated.ip, consolidated);}
+	   { consolidatedIPs.put(consolidated.ip + consolidated.day.toString(), consolidated);}
    }
    
    public static void main(String ... args) {
