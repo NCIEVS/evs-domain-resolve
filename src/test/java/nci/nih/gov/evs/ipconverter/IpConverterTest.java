@@ -96,12 +96,78 @@ class IpConverterTest {
 		
 		String firstLine = logLines.get(0);
 		assertTrue(dates.contains(getDateForString(parseDate(firstLine))));
+
 		
-		List<String> sept8Log = logLines.stream().filter(x -> sept8.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
-		assertNotNull(parseDuration(sept8Log.get(0)));
-		System.out.println(parseDuration(sept8Log.get(0)));
-		assertTrue(parseDuration(sept8Log.get(0)).equals("21885000") || parseDuration(sept8Log.get(1)).equals("21885000"));
-		assertTrue(parseDuration(sept8Log.get(0)).equals("850000") || parseDuration(sept8Log.get(1)).equals("850000"));
+		List<String> sept8LogDay = logLines.stream().filter(x -> sept8.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(sept8LogDay.get(0)));
+		System.out.println(parseDuration(sept8LogDay.get(0)));
+		
+		assertTrue(parseDuration(sept8LogDay.get(0)).equals("21885000") || parseDuration(sept8LogDay.get(1)).equals("21885000"));
+		assertTrue(parseDuration(sept8LogDay.get(0)).equals("850000") || parseDuration(sept8LogDay.get(1)).equals("850000"));
+		
+		assertTrue(parseSize(sept8LogDay.get(0)).equals("2250339") || parseSize(sept8LogDay.get(1)).equals("2250339"));
+		assertTrue(parseSize(sept8LogDay.get(0)).equals("75861") || parseSize(sept8LogDay.get(1)).equals("75861"));
+		
+		List<String> sept9LogDay = logLines.stream().filter(x -> sept9.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(sept9LogDay.get(0)));
+		System.out.println(parseDuration(sept9LogDay.get(0)));
+		assertTrue(parseDuration(sept9LogDay.get(0)).equals("0") && parseDuration(sept9LogDay.get(1)).equals("0"));
+		//assertTrue(parseDuration(sept9LogDay.get(0)).equals("850000") || parseDuration(sept9LogDay.get(1)).equals("850000"));
+		
+		assertTrue(parseSize(sept9LogDay.get(0)).equals("885629") || parseSize(sept9LogDay.get(1)).equals("885629"));
+		assertTrue(parseSize(sept9LogDay.get(0)).equals("4736") || parseSize(sept9LogDay.get(1)).equals("4736"));
+		
+		List<String> sept10LogDay = logLines.stream().filter(x -> sept10.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(sept10LogDay.get(0)));
+		System.out.println(parseDuration(sept10LogDay.get(0)));
+		assertTrue(parseDuration(sept10LogDay.get(0)).equals("31086000") || parseDuration(sept10LogDay.get(1)).equals("31086000"));
+		assertTrue(parseDuration(sept10LogDay.get(0)).equals("1252000") || parseDuration(sept10LogDay.get(1)).equals("1252000"));
+		
+		assertTrue(parseSize(sept10LogDay.get(0)).equals("955816") || parseSize(sept10LogDay.get(1)).equals("955816"));
+		assertTrue(parseSize(sept10LogDay.get(0)).equals("5713") || parseSize(sept10LogDay.get(1)).equals("5713"));
+		
+		List<String> sept11LogDay = logLines.stream().filter(x -> sept11.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(sept11LogDay.get(0)));
+		System.out.println(parseDuration(sept11LogDay.get(0)));
+		assertTrue(parseDuration(sept11LogDay.get(0)).equals("0"));
+		
+		assertTrue(parseSize(sept11LogDay.get(0)).equals("196"));
+		
+		List<String> sept30LogDay = logLines.stream().filter(x -> sept30.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(sept30LogDay.get(0)));
+		System.out.println(parseDuration(sept30LogDay.get(0)));
+
+		assertTrue(parseDuration(sept30LogDay.get(0)).equals("1000") || parseDuration(sept30LogDay.get(1)).equals("1000"));
+		assertTrue(parseDuration(sept30LogDay.get(0)).equals("0") || parseDuration(sept30LogDay.get(1)).equals("0"));
+		
+		assertTrue(parseSize(sept30LogDay.get(0)).equals("3090342") || parseSize(sept30LogDay.get(1)).equals("3090342"));
+		assertTrue(parseSize(sept30LogDay.get(0)).equals("60201") || parseSize(sept30LogDay.get(1)).equals("60201"));
+		
+		List<String> oct1LogDay = logLines.stream().filter(x -> oct1.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration( oct1LogDay.get(0)));
+		System.out.println(parseDuration( oct1LogDay.get(0)));
+
+		assertTrue(parseDuration( oct1LogDay.get(0)).equals("19695000"));
+		
+		assertTrue(parseSize( oct1LogDay.get(0)).equals("38229"));
+		
+		List<String> oct2LogDay = logLines.stream().filter(x -> oct2.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(oct2LogDay.get(0)));
+		System.out.println(parseDuration(oct2LogDay.get(0)));
+
+		assertTrue(parseDuration(oct2LogDay.get(0)).equals("1412000") || parseDuration(oct2LogDay.get(1)).equals("1412000") 
+				|| parseDuration(oct2LogDay.get(2)).equals("1412000"));
+		assertTrue(parseDuration(oct2LogDay.get(0)).equals("44000") || parseDuration(oct2LogDay.get(1)).equals("44000")
+				|| parseDuration(oct2LogDay.get(2)).equals("44000"));
+		assertTrue(parseDuration(oct2LogDay.get(0)).equals("6000") || parseDuration(oct2LogDay.get(1)).equals("6000")
+				|| parseDuration(oct2LogDay.get(2)).equals("6000"));
+		
+		assertTrue(parseSize(oct2LogDay.get(0)).equals("4093") || parseSize(oct2LogDay.get(1)).equals("4093") 
+				|| parseSize(oct2LogDay.get(2)).equals("4093"));
+		assertTrue(parseSize(oct2LogDay.get(0)).equals("957800") || parseSize(oct2LogDay.get(1)).equals("957800") 
+				|| parseSize(oct2LogDay.get(2)).equals("957800"));
+		assertTrue(parseSize(oct2LogDay.get(0)).equals("13616") || parseSize(oct2LogDay.get(1)).equals("13616") 
+				|| parseSize(oct2LogDay.get(2)).equals("13616"));
 		 
 	}
 	
@@ -116,8 +182,7 @@ class IpConverterTest {
 			final Matcher matcher = pattern.matcher(logLine);
 			if(matcher.find()) {
 				date = matcher.group(1);
-			}
-			
+			}			
 			return date;
 	}
 	
@@ -135,6 +200,18 @@ class IpConverterTest {
 	
 	public String parseDuration(String logLine) {
 		 final String regex =  "duration: (\\d+)";
+		   String duration = null;
+	        final Pattern pattern = Pattern.compile(regex);
+			final Matcher matcher = pattern.matcher(logLine);
+			if(matcher.find()) {
+				duration = matcher.group(1);
+			}
+			
+			return duration;
+	}
+	
+	public String parseSize(String logLine) {
+		 final String regex =  "length: (\\d+)";
 		   String duration = null;
 	        final Pattern pattern = Pattern.compile(regex);
 			final Matcher matcher = pattern.matcher(logLine);
