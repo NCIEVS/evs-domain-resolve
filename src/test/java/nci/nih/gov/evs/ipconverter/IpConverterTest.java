@@ -176,8 +176,68 @@ class IpConverterTest {
 		assertTrue(parseDuration(oct5LogDay.get(0)).equals("21315000") || parseDuration(oct5LogDay.get(1)).equals("21315000"));
 		assertTrue(parseDuration(oct5LogDay.get(0)).equals("1000") || parseDuration(oct5LogDay.get(1)).equals("1000"));
 		
-		assertTrue(parseSize(oct5LogDay.get(0)).equals("3090342") || parseSize(oct5LogDay.get(1)).equals("3090342"));
-		assertTrue(parseSize(oct5LogDay.get(0)).equals("60201") || parseSize(oct5LogDay.get(1)).equals("60201"));
+		assertTrue(parseSize(oct5LogDay.get(0)).equals("221605") || parseSize(oct5LogDay.get(1)).equals("221605"));
+		assertTrue(parseSize(oct5LogDay.get(0)).equals("892183") || parseSize(oct5LogDay.get(1)).equals("893183"));
+		
+		List<String> oct28LogDay = logLines.stream().filter(x -> oct28.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(oct28LogDay.get(0)));
+		System.out.println(parseDuration(oct28LogDay.get(0)));
+
+		assertTrue(parseDuration(oct28LogDay.get(0)).equals("41000"));
+		
+		assertTrue(parseSize(oct28LogDay.get(0)).equals("26345"));
+		
+		List<String> oct29LogDay = logLines.stream().filter(x -> oct29.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(oct29LogDay.get(0)));
+		System.out.println(parseDuration(oct29LogDay.get(0)));
+
+		assertTrue(parseDuration(oct29LogDay.get(0)).equals("0"));
+		
+		assertTrue(parseSize(oct29LogDay.get(0)).equals("892382"));
+		
+		List<String> nov3LogDay = logLines.stream().filter(x -> nov3.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(nov3LogDay.get(0)));
+		System.out.println(parseDuration(nov3LogDay.get(0)));
+
+		assertTrue(parseDuration(nov3LogDay.get(0)).equals("218000") || parseDuration(nov3LogDay.get(1)).equals("218000"));
+		assertTrue(parseDuration(nov3LogDay.get(0)).equals("2000") || parseDuration(nov3LogDay.get(1)).equals("2000"));
+		
+		assertTrue(parseSize(nov3LogDay.get(0)).equals("959539") || parseSize(nov3LogDay.get(1)).equals("959539"));
+		assertTrue(parseSize(nov3LogDay.get(0)).equals("892141") || parseSize(nov3LogDay.get(1)).equals("893141"));
+		
+		List<String> nov5LogDay = logLines.stream().filter(x -> nov5.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(nov5LogDay.get(0)));
+		System.out.println(parseDuration(nov5LogDay.get(0)));
+
+		assertTrue(parseDuration(nov5LogDay.get(0)).equals("0"));
+		
+		assertTrue(parseSize(nov5LogDay.get(0)).equals("892382"));
+		
+		List<String> nov6LogDay = logLines.stream().filter(x -> nov6.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(nov6LogDay.get(0)));
+		System.out.println(parseDuration(nov6LogDay.get(0)));
+
+		assertTrue(parseDuration(nov6LogDay.get(0)).equals("0"));
+		
+		assertTrue(parseSize(nov6LogDay.get(0)).equals("0"));
+		
+		List<String>nov10LogDay = logLines.stream().filter(x -> nov10.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(nov10LogDay.get(0)));
+		System.out.println(parseDuration(nov10LogDay.get(0)));
+
+		assertTrue(parseDuration(nov10LogDay.get(0)).equals("29000"));
+		
+		assertTrue(parseSize(nov10LogDay.get(0)).equals("9547"));
+		
+		List<String> nov12LogDay = logLines.stream().filter(x -> nov12.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
+		assertNotNull(parseDuration(nov12LogDay.get(0)));
+		System.out.println(parseDuration(nov12LogDay.get(0)));
+
+		assertTrue(parseDuration(nov12LogDay.get(0)).equals("9111000"));
+		
+		assertTrue(parseSize(nov12LogDay.get(0)).equals("898407"));
+		
+		
 		 
 	}
 	
