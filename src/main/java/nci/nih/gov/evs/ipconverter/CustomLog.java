@@ -1,15 +1,20 @@
 package nci.nih.gov.evs.ipconverter;
 
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.stream.Stream;
 
 public class CustomLog {
 	
    	class IpConsolidated{
-   		public IpConsolidated(String ip, String tmstp, long size) {
+   		public IpConsolidated(String ip, String tmstp, long size, long duration, Date day) {
    			this.ip = ip;
    			this.tmstp = tmstp;
    			this.size = size;
+   			this.duration = duration;
+   			this.day = day;
+   			
+   			
    		}
   		
    		public IpConsolidated() {
@@ -18,6 +23,8 @@ public class CustomLog {
 		String ip;
    		String tmstp;
    		long size;
+   		long duration;
+   		Date day;
    	}
    	
 	
@@ -40,7 +47,9 @@ public class CustomLog {
 		{ domain = processor.readLogLineWhois(processor.whois(conso.ip));}
 		logLine.append("timestamp: " + conso.tmstp + " ");
 		logLine.append("domain: " + domain + " ");
-		logLine.append("length: " + conso.size);
+		logLine.append("length: " + conso.size  + " ");
+		logLine.append("duration: " + conso.duration  + " ");
+		logLine.append("day: " + conso.day);
 		return logLine.toString();	
 	}
 	
@@ -63,10 +72,14 @@ public class CustomLog {
 	   if(consolidated.ip.equals("NOIP")) {return;}
 	   consolidated.tmstp = processor.getTimeStampFromLine(logLine);
 	   consolidated.size = Integer.valueOf(processor.getLengthFromLine(logLine));
-	  if(consolidatedIPs.containsKey(consolidated.ip)) 
-	  	{ consolidatedIPs.get(consolidated.ip).size += consolidated.size;}
+	   consolidated.day = processor.getDayDateFromLogLine(logLine);
+	  if(consolidatedIPs.containsKey(consolidated.ip + consolidated.day)) 
+	  	{IpConsolidated ip = consolidatedIPs.get(consolidated.ip + consolidated.day);
+	  	 ip.size += consolidated.size;
+	  	 ip.duration = processor.updateDurationByDayDate(ip.day, consolidated.day, ip.tmstp, consolidated.tmstp);
+	  	}
 	  else 
-	   { consolidatedIPs.put(consolidated.ip, consolidated);}
+	   { consolidatedIPs.put(consolidated.ip + consolidated.day.toString(), consolidated);}
    }
    
    public static void main(String ... args) {

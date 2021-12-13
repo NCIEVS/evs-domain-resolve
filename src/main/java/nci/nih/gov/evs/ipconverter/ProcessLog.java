@@ -13,16 +13,26 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class ProcessLog {
 	
-	public Stream<String> readLogLine(String fileName) {
+	//Simple file reading mechanism to stream
 	
-	         
+	public Stream<String> readLogLine(String fileName) {
+
 	    Path path;
 	    Stream<String> lines = null;
 		try {
@@ -31,9 +41,10 @@ public class ProcessLog {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
- 
 	    return lines;
 	}
+	
+	//Test script for a log line read
 	
 	public List<String> readLogLineToTestOutput(String fileName) {
 		
@@ -56,6 +67,8 @@ public class ProcessLog {
 		return null;
 	}
 
+	// The whois service call has quite a lot of noise. We use a regex pattern to filter out
+	// the specific domain containing value further filtered to contain only the top level domain
 	
 	public String readLogLineWhois(String line) {
 		
@@ -69,8 +82,6 @@ public class ProcessLog {
 				// extract the domain and set it
 				try {
 					domainTemp = m.group(1);
-					// possibly run against a lookup table, like the process
-					// scripts, to get a better hostName
 				} catch (Exception e) {
 					e.printStackTrace();
 				}				
@@ -80,11 +91,13 @@ public class ProcessLog {
 
 	}
     
+    
+    // Getting the timestamp representation of a particular date format from Apache formatted access log
 
     public String getTimeStampFromLine( String line) {
     	String ip = null;
     	//Finding the pattern of the time stamp by searching for the square brackets and populating the interior
-        final String regex =  "(\\[\\d{2}\\/[a-z,A-Z]+\\/\\d{4}:\\d{2}:\\d{2}:\\d{2} [\\+,-]\\d{4}\\])";
+        final String regex =  "(\\d{2}\\/[a-z,A-Z]+\\/\\d{4}:\\d{2}:\\d{2}:\\d{2} [\\+,-]\\d{4})";
    
         final Pattern pattern = Pattern.compile(regex);
 		final Matcher matcher = pattern.matcher(line);
@@ -94,6 +107,17 @@ public class ProcessLog {
     	return ip;
     }
     
+    // Getting the millisecond representation of a particular date format
+    
+    public long getDurationMilliSeconds(String rawDate) {
+ 	   DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
+ 	   builder.appendPattern("dd/MMM/yyyy:HH:mm:ss Z");
+ 	   DateTimeFormatter f = builder.toFormatter();
+ 	   TemporalAccessor dateTime = f.parse(rawDate);
+ 	   return Instant.from(dateTime).toEpochMilli();
+    }
+    
+    //Regex query returning the size of download to browser from Apache formatted access log
     
     public int getLengthFromLine( String line) {
     	String ip = null;
@@ -110,6 +134,7 @@ public class ProcessLog {
 		else{return Integer.valueOf(ip);}
     }
 
+    // Regex query returning IP from an Apache formatted access log
     
     public String getIpFromLine(String line) {
     	if(line == null 
@@ -129,11 +154,14 @@ public class ProcessLog {
     	return ip;
     }
     
+    // Filter for health checker ping
     private boolean isHealthPing(String domain) {
     	if(domain.contains("ELB-HealthChecker")) { return true;}
     	return false;
 	}
 
+    // Domain resolved using a linux based system call to dig. Returns a domain name
+   
 	public String getTLDString(String IP) {
     		if(IP == null) {return null;}
     		BufferedReader br = null;
@@ -158,11 +186,14 @@ public class ProcessLog {
             return output;
     	}
     
+	// Filter for google bot entries in log.
     public boolean isBot(String domain) {
     	if(domain.contains("Googlebot")) {System.out.println("Removing bot reference"); return true;}
     	return false;
     }
 
+    // Domain name resolved by representation in an email address
+    
 	public String whois(String IP) {
 		String serverName = System
 				.getProperty("WHOIS_SERVER", "whois.arin.net");
@@ -185,12 +216,10 @@ public class ProcessLog {
 			if(in == null) {return null;}
 			StringBuffer response = new StringBuffer();
 			while ((c = in.read()) != -1) {
-				// System.out.write(c);
 				response.append((char) c);
-				// response.append("\r\n");
 			}
 			return response.toString();
-			// whois_parser(response.toString());
+
 		} catch (UnknownHostException e) {
 
 			// TODO Auto-generated catch block
@@ -223,6 +252,80 @@ public class ProcessLog {
 			}}
 		}
 
+	}
+	
+	public static void main(String ...args) {
+	 	   DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
+	 	   builder.appendPattern("dd/MMM/yyyy:HH:mm:ss Z");
+	 	   DateTimeFormatter f = builder.toFormatter();
+	 	   TemporalAccessor dateTime = f.parse("23/Dec/2020:17:27:54 +0100");
+	 	   System.out.println(Instant.from(dateTime).toEpochMilli());
+
+	 	   SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+	 	    try {
+				Date firstDate = sdf.parse("23/Dec/2020");
+		 	    Date secondDate = sdf.parse("24/Dec/2020");
+		 	    
+		 	    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+		 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		 	    System.out.println("" + diff);
+		 	    
+		 	    
+				Date firstSameDate = sdf.parse("24/Dec/2020");
+		 	    Date secondSameDate = sdf.parse("24/Dec/2020");
+		 	    
+		 	    long diffInSameMillies = Math.abs(secondSameDate.getTime() - firstSameDate.getTime());
+		 	    long sameDiff = TimeUnit.DAYS.convert(diffInSameMillies, TimeUnit.MILLISECONDS);
+		 	    System.out.println("" + sameDiff);
+			} catch (ParseException e) {
+				throw new RuntimeException("Date from Log is Incompatible with Expected Format", e);
+			}
+
+	}
+
+	// Duration concept is based on a daily review of IP contacts where the final IP contact
+	// represents the temporal boundary for an accumulated duration when compared with the initial
+	// contact
+	
+	public long updateDurationByDayDate(Date day, Date newDay, String tmstp, String tmstp2) {
+		if(!isNewDayDate(day, newDay)) {
+		return Math.abs(getDurationMilliSeconds(tmstp) - getDurationMilliSeconds(tmstp2));
+		}else{return 0;}
+	}
+	
+//	private long dateDiff(Date day, Date newDay) {
+// 	    long diffInMillies = Math.abs(day.getTime() - day.getTime());
+// 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+// 	    return diff;
+//	}
+	
+	// We want the day portion of the date to frame each IP related data row
+
+	public Date getDayDateFromLogLine(String logLine) {
+		
+    	String date = null;
+    	//Finding the pattern of the time stamp by searching for the square brackets and populating the interior
+        final String regex =  "(\\d{2}\\/[a-z,A-Z]+\\/\\d{4})";
+   
+        final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(logLine);
+		if(matcher.find()) {
+			date = matcher.group(1);
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+		Date dayDate = null;
+    	try {
+			dayDate = sdf.parse(date);
+		} catch (ParseException e) {
+			throw new RuntimeException("Date from Log is Incompatible with Expected Format", e);
+		}
+		return dayDate;		
+	}
+	
+	public boolean isNewDayDate(Date oldDate, Date newDate) {
+		 	    long diffInMillies = Math.abs(oldDate.getTime() - newDate.getTime());
+		 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		 	    return diff >= 1;
 	}
     
 }
