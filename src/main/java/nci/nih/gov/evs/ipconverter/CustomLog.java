@@ -2,10 +2,10 @@ package nci.nih.gov.evs.ipconverter;
 
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.stream.Stream;
 
 public class CustomLog {
 	
+	// Model element for log output items
    	class IpConsolidated{
    		public IpConsolidated(String ip, String tmstp, long size, long duration, Date day) {
    			this.ip = ip;
@@ -13,8 +13,6 @@ public class CustomLog {
    			this.size = size;
    			this.duration = duration;
    			this.day = day;
-   			
-   			
    		}
   		
    		public IpConsolidated() {
@@ -27,17 +25,7 @@ public class CustomLog {
    		Date day;
    	}
    	
-	
-	public String createLogOutPutLine(ProcessLog processor, String line) {
-		StringBuilder logLine = new StringBuilder();
-		String domain = processDomainfromLine(processor,line);
-		if(domain.equals("UNKNOWN")) 
-		{ domain = processor.readLogLineWhois(processor.whois(processor.getIpFromLine(line)));}
-		logLine.append("timestamp: " + processor.getTimeStampFromLine(line) + " ");
-		logLine.append("domain: " + domain + " ");
-		logLine.append("length: " + processor.getLengthFromLine(line));
-		return logLine.toString();	
-	}
+	// The output string from the model element into the custom log
 	
 	public String createLogOutPutLineFromHashTable(IpConsolidated conso) {
 		StringBuilder logLine = new StringBuilder();
@@ -53,6 +41,9 @@ public class CustomLog {
 		return logLine.toString();	
 	}
 	
+  // Filtering and trimming top level domains based on artifacts found after
+  // resolution calls
+	
    public String processDomainFromResolvedIP(String dugDNS) {
 	   if(dugDNS == null || dugDNS.equals("")) return "UNKNOWN";
 	   String tld = dugDNS.substring(0,dugDNS.lastIndexOf("."));
@@ -60,10 +51,13 @@ public class CustomLog {
 	   return tld;
    }
    
+   // Making calls to domain resolution services and processing them to trimmed and qualified values
+   
    public String processDomainfromLine(ProcessLog processor, String line) {
 	   return processDomainFromResolvedIP(processor.getTLDString(processor.getIpFromLine(line)));
    }
    
+   // Mapping the line from an access log by transforming it into a model element
    
    public void  mapLogLineToConsolidated(Hashtable<String, IpConsolidated> consolidatedIPs, String logLine) {
 	   ProcessLog processor = new ProcessLog();
@@ -80,10 +74,5 @@ public class CustomLog {
 	  	}
 	  else 
 	   { consolidatedIPs.put(consolidated.ip + consolidated.day.toString(), consolidated);}
-   }
-   
-   public static void main(String ... args) {
-	   ProcessLog processor = new ProcessLog();
-	   System.out.println(new CustomLog().processDomainFromResolvedIP("crawl-66-249-75-92.googlebot.com."));	   
    }
 }
