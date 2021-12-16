@@ -86,7 +86,9 @@ class IpConverterTest {
 		
 		
 		IpConverter ipC = new IpConverter();
-		String[] args = {"/Users/bauerhs/git/evs-domain-resolve/src/test/resources/accesstest.log","mytestoutput.txt"};
+		String target = getClass().getResource("/accesstest.log").getFile();
+		System.out.println(target);
+		String[] args = {target,"mytestoutput.txt"};
 		ipC.run(args );
 		
 		ProcessLog processor = new ProcessLog();
