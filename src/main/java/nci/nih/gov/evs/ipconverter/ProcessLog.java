@@ -175,7 +175,7 @@ public class ProcessLog {
 	            output = br.readLine();
 	            br.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new RuntimeException("Dig command line call has failed", e);
 			}finally { if(br != null) {try {
 				br.close();
 			} catch (IOException e) {
