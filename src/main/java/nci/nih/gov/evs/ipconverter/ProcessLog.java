@@ -83,7 +83,7 @@ public class ProcessLog {
 				try {
 					domainTemp = m.group(1);
 				} catch (Exception e) {
-					e.printStackTrace();
+					throw new RuntimeException("Parsing a whois pattern has failed", e);
 				}				
 			}
 			
@@ -291,12 +291,6 @@ public class ProcessLog {
 		return Math.abs(getDurationMilliSeconds(tmstp) - getDurationMilliSeconds(tmstp2));
 		}else{return 0;}
 	}
-	
-//	private long dateDiff(Date day, Date newDay) {
-// 	    long diffInMillies = Math.abs(day.getTime() - day.getTime());
-// 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-// 	    return diff;
-//	}
 	
 	// We want the day portion of the date to frame each IP related data row
 
