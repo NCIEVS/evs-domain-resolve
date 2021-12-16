@@ -180,7 +180,7 @@ class IpConverterTest {
 		assertTrue(parseDuration(oct5LogDay.get(0)).equals("1000") || parseDuration(oct5LogDay.get(1)).equals("1000"));
 		
 		assertTrue(parseSize(oct5LogDay.get(0)).equals("221605") || parseSize(oct5LogDay.get(1)).equals("221605"));
-		assertTrue(parseSize(oct5LogDay.get(0)).equals("892183") || parseSize(oct5LogDay.get(1)).equals("893183"));
+		assertTrue(parseSize(oct5LogDay.get(0)).equals("893183") || parseSize(oct5LogDay.get(1)).equals("893183"));
 		
 		List<String> oct28LogDay = logLines.stream().filter(x -> oct28.equals(getDateForString(parseDate(x)))).collect(Collectors.toList());
 		assertNotNull(parseDuration(oct28LogDay.get(0)));
