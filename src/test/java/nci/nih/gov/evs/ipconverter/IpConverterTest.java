@@ -85,13 +85,10 @@ class IpConverterTest {
 	@Test
 	void test() throws ParseException {
 		
-//		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd hh:mm:ss zzz yyyy", Locale.ENGLISH);
-//
-//		sept8 = sdf.parse("Thu Oct 29 00:00:00 CDT 2020");
 		
-//		IpConverter ipC = new IpConverter();
-//		String[] args = {"/Users/bauerhs/git/evs-domain-resolve/src/test/resources/accesstest.log","mytestoutput.txt"};
-//		ipC.run(args );
+		IpConverter ipC = new IpConverter();
+		String[] args = {"/Users/bauerhs/git/evs-domain-resolve/src/test/resources/accesstest.log","mytestoutput.txt"};
+		ipC.run(args );
 		
 		ProcessLog processor = new ProcessLog();
 		Stream<String> logLine = processor.readLogLine("mytestoutput.txt");
