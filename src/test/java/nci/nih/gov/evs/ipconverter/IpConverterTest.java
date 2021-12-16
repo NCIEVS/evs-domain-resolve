@@ -5,12 +5,15 @@ package nci.nih.gov.evs.ipconverter;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -43,39 +46,39 @@ class IpConverterTest {
 	@BeforeEach
 	public void setUp() throws ParseException {
 		
-		   SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd hh:mm:ss zzz yyyy", Locale.ENGLISH);
-		   
+		   SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd hh:mm:ss yyyy", Locale.ENGLISH);
+		  // sdf.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
 		dates = new ArrayList<Date>();
 
-		sept8 = sdf.parse("Tue Sep 08 00:00:00 CDT 2020");
+		sept8 = sdf.parse("Tue Sep 08 00:00:00 2020");
 		dates.add(sept8);
-		sept9 = sdf.parse("Wed Sep 09 00:00:00 CDT 2020");
+		sept9 = sdf.parse("Wed Sep 09 00:00:00 2020");
 		dates.add(sept9);
-		sept10 = sdf.parse("Thu Sep 10 00:00:00 CDT 2020");
+		sept10 = sdf.parse("Thu Sep 10 00:00:00 2020");
 		dates.add(sept10);
-		sept11 = sdf.parse("Fri Sep 11 00:00:00 CDT 2020");
+		sept11 = sdf.parse("Fri Sep 11 00:00:00 2020");
 		dates.add(sept11);
-		sept30 = sdf.parse("Wed Sep 30 00:00:00 CDT 2020");
+		sept30 = sdf.parse("Wed Sep 30 00:00:00 2020");
 		dates.add(sept30);
-		oct1 = sdf.parse("Thu Oct 01 00:00:00 CDT 2020");
+		oct1 = sdf.parse("Thu Oct 01 00:00:00 2020");
 		dates.add(oct1);
-		oct2 = sdf.parse("Fri Oct 02 00:00:00 CDT 2020");
+		oct2 = sdf.parse("Fri Oct 02 00:00:00 2020");
 		dates.add(oct2);
-		oct5 = sdf.parse("Mon Oct 05 00:00:00 CDT 2020");
+		oct5 = sdf.parse("Mon Oct 05 00:00:00 2020");
 		dates.add(oct5);
-		oct28 = sdf.parse("Wed Oct 28 00:00:00 CDT 2020");
+		oct28 = sdf.parse("Wed Oct 28 00:00:00 2020");
 		dates.add(oct28);
-		oct29 = sdf.parse("Thu Oct 29 00:00:00 CDT 2020");
+		oct29 = sdf.parse("Thu Oct 29 00:00:00 2020");
 		dates.add(oct29);
-		nov3 = sdf.parse("Tue Nov 03 00:00:00 CST 2020");
+		nov3 = sdf.parse("Tue Nov 03 00:00:00 2020");
 		dates.add(nov3);
-		nov5 = sdf.parse("Thu Nov 05 00:00:00 CST 2020");
+		nov5 = sdf.parse("Thu Nov 05 00:00:00 2020");
 		dates.add(nov5);
-		nov6 = sdf.parse("Fri Nov 06 00:00:00 CST 2020");
+		nov6 = sdf.parse("Fri Nov 06 00:00:00 2020");
 		dates.add(nov6);
-		nov10 = sdf.parse("Tue Nov 10 00:00:00 CST 2020");
+		nov10 = sdf.parse("Tue Nov 10 00:00:00 2020");
 		dates.add(nov10);
-		nov12 = sdf.parse("Thu Nov 12 00:00:00 CST 2020");
+		nov12 = sdf.parse("Thu Nov 12 00:00:00 2020");
 		dates.add(nov12);
 		
 		System.out.println("Date: " + sept8.toString());
