@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-//import org.junit.jupiter.api.Test;
 
 class IpConverterTest {
 	
@@ -85,13 +84,10 @@ class IpConverterTest {
 	@Test
 	void test() throws ParseException {
 		
-//		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd hh:mm:ss zzz yyyy", Locale.ENGLISH);
-//
-//		sept8 = sdf.parse("Thu Oct 29 00:00:00 CDT 2020");
 		
-//		IpConverter ipC = new IpConverter();
-//		String[] args = {"/Users/bauerhs/git/evs-domain-resolve/src/test/resources/accesstest.log","mytestoutput.txt"};
-//		ipC.run(args );
+		IpConverter ipC = new IpConverter();
+		String[] args = {"/Users/bauerhs/git/evs-domain-resolve/src/test/resources/accesstest.log","mytestoutput.txt"};
+		ipC.run(args );
 		
 		ProcessLog processor = new ProcessLog();
 		Stream<String> logLine = processor.readLogLine("mytestoutput.txt");
@@ -115,7 +111,6 @@ class IpConverterTest {
 		assertNotNull(parseDuration(sept9LogDay.get(0)));
 		System.out.println(parseDuration(sept9LogDay.get(0)));
 		assertTrue(parseDuration(sept9LogDay.get(0)).equals("0") && parseDuration(sept9LogDay.get(1)).equals("0"));
-		//assertTrue(parseDuration(sept9LogDay.get(0)).equals("850000") || parseDuration(sept9LogDay.get(1)).equals("850000"));
 		
 		assertTrue(parseSize(sept9LogDay.get(0)).equals("885629") || parseSize(sept9LogDay.get(1)).equals("885629"));
 		assertTrue(parseSize(sept9LogDay.get(0)).equals("4736") || parseSize(sept9LogDay.get(1)).equals("4736"));
@@ -265,7 +260,6 @@ class IpConverterTest {
     	try {
 			dayDate = sdf.parse(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return dayDate;
