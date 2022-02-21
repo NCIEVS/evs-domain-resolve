@@ -189,13 +189,16 @@ public class ProcessLog {
 	
     // Filter for health checker ping
     private boolean isHealthPing(String domain) {
-    	if(domain.contains("ELB-HealthChecker") || domain.contains("nagios")) { return true;}
+    	if(domain.contains("ELB-HealthChecker") || domain.contains("nagios") || domain.contains("bitdiscovery")) { return true;}
     	return false;
 	}
     
 	// Filter for google bot entries in log.
     public boolean isBot(String domain) {
-    	if(domain.contains("Googlebot") || domain.contains("bingbot") || domain.contains("qwant")) 
+    	if(domain.contains("Googlebot") || domain.contains("bingbot") 
+    			|| domain.contains("qwant") || domain.contains("Nimbostratus-Bot") 
+    			|| domain.contains("CensysInspect") || domain.contains("l9explore") 
+    			|| domain.contains("l9tcpid") || domain.contains("302"))
     	{System.out.println("Removing bot reference"); return true;}
     	return false;
     }
