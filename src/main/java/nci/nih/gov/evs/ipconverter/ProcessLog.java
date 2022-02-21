@@ -22,6 +22,11 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -207,7 +212,7 @@ public class ProcessLog {
 			out = new OutputStreamWriter(theSocket.getOutputStream(),
 					"8859_1");
 			
-			//pass in the current host to the whois
+			//pass in the current IP to the whois
 			out.write(IP + "\r\n");
 			out.flush();
 
@@ -320,5 +325,6 @@ public class ProcessLog {
 		 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		 	    return diff >= 1;
 	}
-    
+	
+
 }
