@@ -159,11 +159,7 @@ public class ProcessLog {
     	return ip;
     }
     
-    // Filter for health checker ping
-    private boolean isHealthPing(String domain) {
-    	if(domain.contains("ELB-HealthChecker")) { return true;}
-    	return false;
-	}
+
 
     // Domain resolved using a linux based system call to dig. Returns a domain name
    
@@ -190,10 +186,17 @@ public class ProcessLog {
 			if(output != null && (output.equals(IP + ".")  || output.equals(IP))) {return null;}
             return output;
     	}
+	
+    // Filter for health checker ping
+    private boolean isHealthPing(String domain) {
+    	if(domain.contains("ELB-HealthChecker") || domain.contains("nagios")) { return true;}
+    	return false;
+	}
     
 	// Filter for google bot entries in log.
     public boolean isBot(String domain) {
-    	if(domain.contains("Googlebot")) {System.out.println("Removing bot reference"); return true;}
+    	if(domain.contains("Googlebot") || domain.contains("bingbot") || domain.contains("qwant")) 
+    	{System.out.println("Removing bot reference"); return true;}
     	return false;
     }
 
