@@ -29,7 +29,9 @@ public class IpConverter {
 	}
 	
 	public void run(String ... args){
-		String accessPath = "/Users/bauerhs/git/evs-domain-resolve/src/main/java/nci/nih/gov/evs/ipconverter/access.sample.log";
+		String accessPath = "/Users/bauerhs/Desktop/access.log";
+		
+//		String accessPath = "/Users/bauerhs/git/evs-domain-resolve/src/main/java/nci/nih/gov/evs/ipconverter/access.sample.log";
 		String filePath = "myFile.txt";
 		ProcessLog processor = new ProcessLog();
 
@@ -40,7 +42,7 @@ public class IpConverter {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(args.length == 0?filePath:args[1])))) {
 			consolidated.values()
 				.stream()
-				.map(x -> log.createLogOutPutLineFromHashTable(x))
+				.map(x -> blockingTimedQuery(x))
 				.forEach(y -> {
 				try {
 					writer.write(y);
@@ -61,12 +63,12 @@ public class IpConverter {
 		} 
 		catch (IOException ex) {
 		   ex.printStackTrace();
-		}
+		}finally {scheduler.shutdown();}
 		
 	}
 	
 	
-	//Under Construction
+
 	public String blockingTimedQuery(CustomLog.IpConsolidated in) {
 
 	scheduler.scheduleAtFixedRate(() -> { queue.offer(in);

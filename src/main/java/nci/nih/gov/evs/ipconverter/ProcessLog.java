@@ -197,7 +197,7 @@ public class ProcessLog {
     public boolean isBot(String domain) {
     	if(domain.contains("Googlebot") || domain.contains("bingbot") 
     			|| domain.contains("qwant") || domain.contains("Nimbostratus-Bot") 
-    			|| domain.contains("CensysInspect") || domain.contains("l9explore") 
+    			|| domain.contains("CensysInspect") || domain.contains("l9explore") || domain.contains("bitdiscovery")
     			|| domain.contains("l9tcpid") || domain.contains("302"))
     	{System.out.println("Removing bot reference"); return true;}
     	return false;
